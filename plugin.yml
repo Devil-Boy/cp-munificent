@@ -8,5 +8,5 @@ depend: [CommandPoints]
 
 permissions:
     cpmunificent.beneficiary:
-        default: default
+        default: true
         description: Receives commandpoints.

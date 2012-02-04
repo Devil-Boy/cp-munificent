@@ -24,8 +24,8 @@ public class CPMConfig {
         this.plugin = plugin;
         
         // Grab values here.
-        grantInterval = getInt("grantInterval", 600);
-        grantAmount = (float) getDouble("grantAmount", 0.6);
+        grantInterval = getInt("grantInterval", 180);
+        grantAmount = (float) getDouble("grantAmount", 0.3);
 	}
 	
 	// Value obtaining functions down below

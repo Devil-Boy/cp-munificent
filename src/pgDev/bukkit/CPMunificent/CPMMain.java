@@ -28,8 +28,9 @@ public class CPMMain extends JavaPlugin {
     CommandPointsAPI cpAPI;
     
 	// File Locations
-    String pluginMainDir = "./plugins/CommandPointsMunificent";
-    String pluginConfigLocation = pluginMainDir + "/CPM.cfg";
+    static String pluginMainDir = "./plugins/CommandPointsMunificent";
+    static String pluginConfigLocation = pluginMainDir + "/CPM.cfg";
+    static String dbLocation = pluginMainDir + "/PartialPointDB.ini";
     
     // Settings
     CPMConfig pluginSettings;
@@ -38,7 +39,7 @@ public class CPMMain extends JavaPlugin {
     Timer pointBucket;
     
     // Partial point tracker
-    ConcurrentHashMap<String, Float> partialPoints = new ConcurrentHashMap<String, Float>();
+    ConcurrentHashMap<String, Float> partialPoints;
 	
 	public void onEnable() {
 		// Check for the plugin directory (create if it does not exist)
@@ -68,6 +69,9 @@ public class CPMMain extends JavaPlugin {
         } catch (Exception e) {
         	System.out.println("Could not load CommandPointsMunificent configuration! " + e);
         }
+        
+        // Load database
+        partialPoints = CPMDatabaseIO.getDB();
         
         // Integrations
         setupPermissions();
@@ -123,6 +127,7 @@ public class CPMMain extends JavaPlugin {
 					grantPoints(beneficiary);
 				}
 			}
+			CPMDatabaseIO.saveDB(partialPoints);
 		}
 	};
 	
@@ -131,7 +136,7 @@ public class CPMMain extends JavaPlugin {
 		String name = player.getName();
 		if (cpAPI.hasAccount(name, this)) {
 			Float newTotal;
-			if (partialPoints.contains(name)) {
+			if (partialPoints.containsKey(name)) {
 				newTotal = partialPoints.get(name) + pluginSettings.grantAmount;
 			} else {
 				newTotal = pluginSettings.grantAmount;
@@ -144,8 +149,9 @@ public class CPMMain extends JavaPlugin {
 				partialPoints.put(name, newTotal - pointsToGive);
 				cpAPI.addPoints(name, pointsToGive, "Played for " + pluginSettings.grantInterval + "seconds.", this);
 			}
+			//player.sendMessage(ChatColor.GOLD + "You get " + pointsToGive + " pointz!");
 		} else {
-			player.sendMessage(ChatColor.RED + "YOu could not be granted commandpoints because your account was not created. Rejoin the server to create one.");
+			player.sendMessage(ChatColor.RED + "You could not be granted commandpoints because your account was not created. Rejoin the server to create one.");
 		}
 	}
 }
