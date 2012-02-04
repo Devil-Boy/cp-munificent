@@ -1,0 +1,16 @@
+#
+# CommandPointsMunificent Configuration
+#
+
+# Grant Interval
+#	This is the time interval (in seconds) that
+#	all players on the server will receive points during.
+grantInterval=600
+
+# Grant Amount
+#	This is the quantity of commandpoints the players will
+#	receive during each interval. It can be a decimal to
+#	allow for partial points.
+#	Players are not granted a full point until they have
+#	gained enough partial points to sum up to a full point.
+grantAmount=0.6
