@@ -148,8 +148,18 @@ public class CPMMain extends JavaPlugin {
 			} else {
 				partialPoints.put(name, newTotal - pointsToGive);
 				cpAPI.addPoints(name, pointsToGive, "Played for " + pluginSettings.grantInterval + "seconds.", this);
+				
+				// Output
+				if (pluginSettings.outputMode == 1) {
+					player.sendMessage(pluginSettings.outputMessage
+							.replace("%p", player.getDisplayName()).replace("%n", pointsToGive + "")
+								.replace("%t", pluginSettings.grantInterval + ""));
+				} else if (pluginSettings.outputMode == 2) {
+					getServer().broadcastMessage(pluginSettings.outputMessage
+							.replace("%p", player.getDisplayName()).replace("%n", pointsToGive + "")
+								.replace("%t", pluginSettings.grantInterval + ""));
+				}
 			}
-			//player.sendMessage(ChatColor.GOLD + "You get " + pointsToGive + " pointz!");
 		} else {
 			player.sendMessage(ChatColor.RED + "You could not be granted commandpoints because your account was not created. Rejoin the server to create one.");
 		}

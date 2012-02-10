@@ -1,6 +1,6 @@
 name: CommandPointsMunificent
 main: pgDev.bukkit.CPMunificent.CPMMain
-version: 0.1
+version: 0.2
 author: PG Dev Team
 authors: [Devil Boy]
 description: Generously grant CommandPoints over time!

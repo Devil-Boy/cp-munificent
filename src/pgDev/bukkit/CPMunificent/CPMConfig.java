@@ -18,6 +18,8 @@ public class CPMConfig {
 	// List of Config Options
 	int grantInterval;
 	float grantAmount;
+	int outputMode;
+	String outputMessage;
 	
 	public CPMConfig(Properties p, CPMMain plugin) {
 		properties = p;
@@ -26,6 +28,8 @@ public class CPMConfig {
         // Grab values here.
         grantInterval = getInt("grantInterval", 180);
         grantAmount = (float) getDouble("grantAmount", 0.3);
+        outputMode = getInt("outputMode", 0);
+        outputMessage = getString("outputMessage", "§6You gained a commandpoint for your play-time.");
 	}
 	
 	// Value obtaining functions down below
@@ -143,7 +147,8 @@ public class CPMConfig {
     // Config creation method
     public void createConfig() {
     	try{
-    		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(plugin.pluginConfigLocation)));
+    		@SuppressWarnings("static-access")
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(plugin.pluginConfigLocation)));
     		out.write("#\r\n");
     		out.write("# CommandPointsMunificent Configuration\r\n");
     		out.write("#\r\n");
@@ -160,6 +165,22 @@ public class CPMConfig {
     		out.write("#	Players are not granted a full point until they have\r\n");
     		out.write("#	gained enough partial points to sum up to a full point.\r\n");
     		out.write("grantAmount=" + grantAmount + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Output Modes\r\n");
+    		out.write("#	You can choose if and how output happens when a player\r\n");
+    		out.write("#	receives a full point. Modes:\r\n");
+    		out.write("#		0 - No output to players\r\n");
+    		out.write("#		1 - Alerts the player who gain the point(s)\r\n");
+    		out.write("#		2 - Broadcasts to all players when a point is earned\r\n");
+    		out.write("outputMode=" + outputMode + "\r\n");
+    		out.write("\r\n");
+    		out.write("# Output Message\r\n");
+    		out.write("#	Here you specify what the message for the 1st or 2nd\r\n");
+    		out.write("#	output mode. Dynamic strings:\r\n");
+    		out.write("#		%p - Name of the player who gained the point(s)\r\n");
+    		out.write("#		%n - Number of points gained\r\n");
+    		out.write("#		%t - Interval length in seconds\r\n");
+    		out.write("outputMessage=" + outputMessage + "\r\n");
     		out.close();
     	} catch (Exception e) {
     		System.out.println(e);

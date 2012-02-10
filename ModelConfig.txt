@@ -14,3 +14,19 @@ grantInterval=600
 #	Players are not granted a full point until they have
 #	gained enough partial points to sum up to a full point.
 grantAmount=0.6
+
+# Output Modes
+#	You can choose if and how output happens when a player
+#	receives a full point. Modes:
+#		0 - No output to players
+#		1 - Alerts the player who gain the point(s)
+#		2 - Broadcasts to all players when a point is earned
+outputMode=0
+
+# Output Message
+#	Here you specify what the message for the 1st or 2nd
+#	output mode. Dynamic strings:
+#		%p - Name of the player who gained the point(s)
+#		%n - Number of points gained
+#		%t - Interval length in seconds
+outputMessage=§6You gained a commandpoint for your play-time.
